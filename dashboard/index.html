@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travel eSIM Analytics</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- ChartJS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-gradient bg1"></div>
+    <div class="bg-gradient bg2"></div>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+
+                <div class="logo-circle">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+
+                <div>
+
+                    <h2>Travel eSIM</h2>
+                    <span>Analytics Dashboard</span>
+
+                </div>
+
+            </div>
+
+            <nav>
+
+                <a href="#" class="active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-ranking-star"></i>
+                    Leaderboard
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-earth-asia"></i>
+                    Destinations
+                </a>
+
+                <a href="#">
+                    <i class="fa-solid fa-chart-column"></i>
+                    Reports
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="glass-card">
+
+                    <i class="fa-solid fa-crown"></i>
+
+                    <h4>Premium Dashboard</h4>
+
+                    <p>Professional Analytics Experience</p>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+
+        <main class="main">
+
+            <!-- Header -->
+
+            <header class="topbar">
+
+                <div>
+
+                    <h1>Travel eSIM Dashboard</h1>
+
+                    <p id="today"></p>
+
+                </div>
+
+                <button class="download-btn" onclick="downloadCSV()">
+
+                    <i class="fa-solid fa-download"></i>
+
+                    Download CSV
+
+                </button>
+
+            </header>
+
+            <!-- KPI Cards -->
+
+            <section class="cards">
+
+                <div class="card orange">
+
+                    <div class="card-top">
+
+                        <div>
+
+                            <span>Today's Orders</span>
+
+                            <h2 id="todayOrders">--</h2>
+
+                        </div>
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-box"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card green">
+
+                    <div class="card-top">
+
+                        <div>
+
+                            <span>Today's Revenue</span>
+
+                            <h2 id="todayRevenue">--</h2>
+
+                        </div>
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card blue">
+
+                    <div class="card-top">
+
+                        <div>
+
+                            <span>Monthly Orders</span>
+
+                            <h2 id="monthlyOrders">--</h2>
+
+                        </div>
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-calendar-days"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="card purple">
+
+                    <div class="card-top">
+
+                        <div>
+
+                            <span>Monthly Revenue</span>
+
+                            <h2 id="monthlyRevenue">--</h2>
+
+                        </div>
+
+                        <div class="icon-box">
+
+                            <i class="fa-solid fa-chart-line"></i>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Middle Section -->
+
+            <section class="middle">
+
+                <!-- Leaderboard -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>
+
+                            <i class="fa-solid fa-ranking-star"></i>
+
+                            Leaderboard
+
+                        </h2>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Name</th>
+
+                                <th>Orders</th>
+
+                                <th>Revenue</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="leaderboardBody">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Destinations -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>
+
+                            <i class="fa-solid fa-earth-asia"></i>
+
+                            Top Destinations
+
+                        </h2>
+
+                    </div>
+
+                    <div id="destinationList">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Charts -->
+
+            <section class="charts">
+
+                <div class="chart-card">
+
+                    <div class="panel-header">
+
+                        <h2>
+
+                            <i class="fa-solid fa-chart-area"></i>
+
+                            Daily Revenue
+
+                        </h2>
+
+                    </div>
+
+                    <canvas id="dailyChart"></canvas>
+
+                </div>
+
+                <div class="chart-card">
+
+                    <div class="panel-header">
+
+                        <h2>
+
+                            <i class="fa-solid fa-chart-column"></i>
+
+                            Monthly Revenue
+
+                        </h2>
+
+                    </div>
+
+                    <canvas id="monthlyChart"></canvas>
+
+                </div>
+
+            </section>
+
+            <footer class="footer">
+
+                <p>
+
+                    Developed by <strong>Abhishek Varshney</strong>
+
+                    © 2026
+
+                </p>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+    <script src="config.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
