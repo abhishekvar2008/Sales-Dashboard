@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Dashboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <h2>
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Sales Dashboard
+
+            </h2>
+
+            <p>Live Sales Analytics</p>
+
+        </div>
+
+        <div class="top-menu">
+
+            <div class="menu-card">
+
+    <label for="dateFilter" class="date-label">
+        <i class="fa-solid fa-calendar-days"></i>
+    </label>
+
+    <select id="dateFilter">
+
+        <option value="">
+            Loading Dates...
+        </option>
+
+    </select>
+
+</div>
+
+            <button class="menu-btn active">
+
+                <i class="fa-solid fa-table-columns"></i>
+
+                Dashboard
+
+            </button>
+
+            <button class="menu-btn" id="walletSummaryBtn">
+
+                <i class="fa-solid fa-wallet"></i>
+
+                Wallet Summary
+
+            </button>
+
+            <button class="download-btn" id="downloadCSV">
+
+                <i class="fa-solid fa-download"></i>
+
+                Download CSV
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- ================= KPI ================= -->
+
+    <section class="kpi-grid">
+
+        <!-- Card 1 -->
+
+        <div class="kpi-card primary">
+
+            <div class="kpi-header">
+
+                <span>Total Performance</span>
+
+                <span class="kpi-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </span>
+
+            </div>
+
+            <h1 id="totalOrders">0</h1>
+
+            <p>Total Orders</p>
+
+            <h3 id="totalRevenue">$0.00</h3>
+
+            <small>Total Revenue</small>
+
+        </div>
+
+        <!-- Card 2 -->
+
+        <div class="kpi-card">
+
+            <div class="kpi-header">
+
+                <span>Current Month (MTD)</span>
+
+                <span class="kpi-icon">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </span>
+
+            </div>
+
+            <h2 id="juneOrders">0</h2>
+
+            <p>Orders</p>
+
+            <h4 id="juneRevenue">$0.00</h4>
+
+        </div>
+
+        <!-- Card 3 -->
+
+        <div class="kpi-card">
+
+            <div class="kpi-header">
+
+                <span>Previous Month Same Day</span>
+
+                <span class="kpi-icon">
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                </span>
+
+            </div>
+
+            <h2 id="prevSameOrders">0</h2>
+
+            <p>Orders</p>
+
+            <h4 id="prevSameRevenue">$0.00</h4>
+
+        </div>
+
+        <!-- Card 4 -->
+
+        <div class="kpi-card">
+
+            <div class="kpi-header">
+
+                <span>Previous Month</span>
+
+                <span class="kpi-icon">
+
+                    <i class="fa-solid fa-sack-dollar"></i>
+
+                </span>
+
+            </div>
+
+            <h2 id="prevOrders">0</h2>
+
+            <p>Orders</p>
+
+            <h4 id="prevRevenue">$0.00</h4>
+
+        </div>
+
+    </section>
+
+    <!-- ================= MIDDLE SECTION ================= -->
+
+    <section class="middle-section">
+
+        <!-- Leaderboard -->
+
+        <div class="leaderboard">
+
+            <div class="card-title">
+
+                <i class="fa-solid fa-trophy"></i>
+
+                Daily Leaderboard
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Rank</th>
+
+                        <th>Sales Person</th>
+
+                        <th>Orders</th>
+
+                        <th>Revenue</th>
+
+                        <th>Avg Order</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="leaderboardBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- Destinations -->
+
+        <div class="destination-card">
+
+            <div class="card-title">
+
+                <i class="fa-solid fa-earth-americas"></i>
+
+                Top Destinations
+
+            </div>
+
+            <div id="destinationList">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= CHARTS ================= -->
+
+    <section class="chart-section">
+
+        <div class="chart-card">
+
+            <div class="card-title">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Daily Revenue
+
+            </div>
+
+            <canvas id="dailyChart"></canvas>
+
+        </div>
+
+        <div class="chart-card">
+
+            <div class="card-title">
+
+                <i class="fa-solid fa-chart-column"></i>
+
+                Monthly Revenue
+
+            </div>
+
+            <canvas id="monthlyChart"></canvas>
+
+        </div>
+
+    </section>
+
+</div>
+
+<!-- ================= WALLET SUMMARY MODAL ================= -->
+
+<div class="wallet-overlay" id="walletOverlay">
+
+    <div class="wallet-modal">
+
+        <!-- HEADER -->
+
+        <div class="wallet-header">
+
+            <div>
+
+                <div class="wallet-heading">
+
+                    <div class="wallet-heading-icon">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>Wallet Summary</h2>
+
+                        <p id="walletSubtitle">
+                            Complete sales performance overview
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <button class="wallet-close" id="walletClose">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <!-- DATE INFORMATION -->
+
+        <div class="wallet-date-banner">
+
+            <div class="wallet-date-icon">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+
+            <div>
+
+                <span>REPORTING PERIOD</span>
+
+                <strong id="walletPeriod">
+                    Loading...
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= DAY SUMMARY ================= -->
+
+        <section class="wallet-section">
+
+            <div class="wallet-section-title">
+
+                <div>
+
+                    <span class="section-kicker">
+                        SELECTED DAY
+                    </span>
+
+                    <h3>
+                        Daily Performance
+                    </h3>
+
+                </div>
+
+                <span class="wallet-section-badge">
+                    <i class="fa-solid fa-sun"></i>
+                    Day
+                </span>
+
+            </div>
+
+
+            <div class="wallet-stat-grid">
+
+                <div class="wallet-stat-card purple">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+
+                    <span>Orders</span>
+
+                    <strong id="walletDayOrders">
+                        0
+                    </strong>
+
+                    <small>Orders placed</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card pink">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+
+                    <span>Revenue</span>
+
+                    <strong id="walletDayRevenue">
+                        $0.00
+                    </strong>
+
+                    <small>Total sales</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card blue">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+
+                    <span>Average Order</span>
+
+                    <strong id="walletDayAverage">
+                        $0.00
+                    </strong>
+
+                    <small>Revenue per order</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card green">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-percent"></i>
+                    </div>
+
+                    <span>Discounts</span>
+
+                    <strong id="walletDayDiscount">
+                        $0.00
+                    </strong>
+
+                    <small>Total discounts</small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MONTH SUMMARY ================= -->
+
+        <section class="wallet-section">
+
+            <div class="wallet-section-title">
+
+                <div>
+
+                    <span class="section-kicker">
+                        CURRENT MONTH
+                    </span>
+
+                    <h3>
+                        Monthly Performance
+                    </h3>
+
+                </div>
+
+                <span class="wallet-section-badge">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    Month
+                </span>
+
+            </div>
+
+
+            <div class="wallet-stat-grid">
+
+                <div class="wallet-stat-card purple">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                    </div>
+
+                    <span>Total Orders</span>
+
+                    <strong id="walletMonthOrders">
+                        0
+                    </strong>
+
+                    <small>Month to date</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card pink">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-money-bill-trend-up"></i>
+                    </div>
+
+                    <span>Total Revenue</span>
+
+                    <strong id="walletMonthRevenue">
+                        $0.00
+                    </strong>
+
+                    <small>Month to date</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card blue">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+
+                    <span>Average Order</span>
+
+                    <strong id="walletMonthAverage">
+                        $0.00
+                    </strong>
+
+                    <small>Average transaction</small>
+
+                </div>
+
+
+                <div class="wallet-stat-card green">
+
+                    <div class="wallet-stat-icon">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+
+                    <span>Total Discounts</span>
+
+                    <strong id="walletMonthDiscount">
+                        $0.00
+                    </strong>
+
+                    <small>Discounts applied</small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HIGHLIGHTS ================= -->
+
+        <section class="wallet-section">
+
+            <div class="wallet-section-title">
+
+                <div>
+
+                    <span class="section-kicker">
+                        SALES HIGHLIGHTS
+                    </span>
+
+                    <h3>
+                        What's Driving Performance
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="wallet-highlight-grid">
+
+
+                <!-- TOP SALESPERSON -->
+
+                <div class="wallet-highlight">
+
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+
+                    <div class="highlight-content">
+
+                        <span>Top Salesperson</span>
+
+                        <strong id="walletTopSalesperson">
+                            —
+                        </strong>
+
+                        <small id="walletTopSalespersonValue">
+                            $0.00 revenue
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOP PRODUCT -->
+
+                <div class="wallet-highlight">
+
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+
+                    <div class="highlight-content">
+
+                        <span>Top Product</span>
+
+                        <strong id="walletTopProduct">
+                            —
+                        </strong>
+
+                        <small id="walletTopProductValue">
+                            0 orders
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOP DESTINATION -->
+
+                <div class="wallet-highlight">
+
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+
+                    <div class="highlight-content">
+
+                        <span>Top Destination</span>
+
+                        <strong id="walletTopDestination">
+                            —
+                        </strong>
+
+                        <small id="walletTopDestinationValue">
+                            0 orders
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BIGGEST ORDER -->
+
+                <div class="wallet-highlight">
+
+                    <div class="highlight-icon">
+                        <i class="fa-solid fa-arrow-trend-up"></i>
+                    </div>
+
+                    <div class="highlight-content">
+
+                        <span>Largest Order</span>
+
+                        <strong id="walletLargestOrder">
+                            $0.00
+                        </strong>
+
+                        <small id="walletLargestOrderNumber">
+                            No order
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TWO COLUMN ANALYSIS ================= -->
+
+        <section class="wallet-analysis-grid">
+
+
+            <!-- SALESPEOPLE -->
+
+            <div class="wallet-panel">
+
+                <div class="wallet-panel-title">
+
+                    <div>
+
+                        <span>
+                            <i class="fa-solid fa-users"></i>
+                        </span>
+
+                        <div>
+
+                            <h3>Sales Team</h3>
+
+                            <p>Revenue contribution</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="walletSalespeople"></div>
+
+            </div>
+
+
+            <!-- PRODUCTS -->
+
+            <div class="wallet-panel">
+
+                <div class="wallet-panel-title">
+
+                    <div>
+
+                        <span>
+                            <i class="fa-solid fa-box"></i>
+                        </span>
+
+                        <div>
+
+                            <h3>Products</h3>
+
+                            <p>Order contribution</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="walletProducts"></div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================= DAILY BREAKDOWN ================= -->
+
+        <section class="wallet-section">
+
+            <div class="wallet-section-title">
+
+                <div>
+
+                    <span class="section-kicker">
+                        MONTHLY BREAKDOWN
+                    </span>
+
+                    <h3>
+                        Revenue by Day
+                    </h3>
+
+                </div>
+
+            </div>
+
+            <div id="walletDailyBreakdown" class="wallet-daily-breakdown"></div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <div class="wallet-footer">
+
+            <div>
+
+                <i class="fa-solid fa-circle-info"></i>
+
+                <span>
+                    Summary calculated from your live sales data.
+                </span>
+
+            </div>
+
+            <button id="walletCloseBottom">
+                Close Summary
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

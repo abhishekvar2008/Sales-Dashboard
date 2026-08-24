@@ -1,0 +1,1071 @@
+
+/* =========================================================
+   SALES DASHBOARD — GREEN & WHITE THEME
+   Works with the existing HTML and JavaScript without changes.
+   ========================================================= */
+
+:root {
+    --green-900: #0b3d2e;
+    --green-800: #0f5132;
+    --green-700: #137a4b;
+    --green-600: #17945b;
+    --green-500: #20a968;
+    --green-100: #e8f7ef;
+    --green-50: #f3fbf6;
+
+    --white: #ffffff;
+    --bg: #f4f8f6;
+    --text: #18352a;
+    --text-light: #6d7f76;
+    --border: #e1ebe5;
+    --shadow: 0 8px 28px rgba(15, 81, 50, 0.08);
+    --shadow-hover: 0 14px 35px rgba(15, 81, 50, 0.14);
+    --radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Jost", sans-serif;
+    background:
+        radial-gradient(circle at 0% 0%, rgba(32, 169, 104, 0.08), transparent 28%),
+        var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button,
+select {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: min(1440px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 28px 0 45px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.logo h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--green-900);
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+}
+
+.logo h2 i {
+    color: var(--green-600);
+}
+
+.logo p {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+.top-menu {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.menu-card,
+.menu-btn,
+.download-btn {
+    height: 44px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 15px;
+    color: var(--text);
+    box-shadow: 0 3px 12px rgba(15, 81, 50, 0.05);
+    transition: 0.2s ease;
+}
+
+.menu-card {
+    padding: 0 10px;
+}
+
+.date-label {
+    color: var(--green-700);
+    padding: 0 5px;
+}
+
+#dateFilter {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text);
+    font-weight: 600;
+    min-width: 145px;
+    cursor: pointer;
+}
+
+.menu-btn:hover,
+.menu-card:hover {
+    border-color: #b9dcca;
+    transform: translateY(-1px);
+}
+
+.menu-btn.active {
+    background: var(--green-700);
+    border-color: var(--green-700);
+    color: white;
+}
+
+.menu-btn.active i {
+    color: white;
+}
+
+.download-btn {
+    background: var(--green-50);
+    color: var(--green-800);
+    border-color: #c9e8d7;
+    font-weight: 600;
+}
+
+.download-btn:hover {
+    background: var(--green-600);
+    color: white;
+    border-color: var(--green-600);
+    transform: translateY(-1px);
+}
+
+/* ================= KPI ================= */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: 1.35fr repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    min-height: 175px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.kpi-card::after {
+    content: "";
+    position: absolute;
+    right: -35px;
+    bottom: -45px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--green-50);
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.kpi-card.primary {
+    background: linear-gradient(135deg, var(--green-900), var(--green-700));
+    color: white;
+    border: 0;
+}
+
+.kpi-card.primary::after {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.kpi-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    color: var(--text-light);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.primary .kpi-header {
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.kpi-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: var(--green-100);
+    color: var(--green-700);
+    display: grid;
+    place-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.primary .kpi-icon {
+    background: rgba(255, 255, 255, 0.14);
+    color: white;
+}
+
+.kpi-card h1,
+.kpi-card h2 {
+    margin-top: 18px;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.kpi-card h3,
+.kpi-card h4 {
+    margin-top: 13px;
+    font-size: 1.05rem;
+    color: var(--green-700);
+    position: relative;
+    z-index: 1;
+}
+
+.primary h3 {
+    color: white;
+}
+
+.kpi-card p,
+.kpi-card small {
+    color: var(--text-light);
+    position: relative;
+    z-index: 1;
+}
+
+.primary p,
+.primary small {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* ================= COMMON CARDS ================= */
+
+.middle-section,
+.chart-section {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.middle-section {
+    grid-template-columns: 1.65fr 1fr;
+}
+
+.chart-section {
+    grid-template-columns: 1fr 1fr;
+}
+
+.leaderboard,
+.destination-card,
+.chart-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    min-width: 0;
+}
+
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--green-900);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.card-title i {
+    color: var(--green-600);
+}
+
+/* ================= TABLE ================= */
+
+.leaderboard {
+    overflow: hidden;
+}
+
+.leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard th {
+    color: var(--text-light);
+    background: var(--green-50);
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    padding: 12px 10px;
+    text-align: left;
+}
+
+.leaderboard td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #edf2ef;
+    font-size: 0.88rem;
+}
+
+.leaderboard tbody tr {
+    transition: background 0.2s ease;
+}
+
+.leaderboard tbody tr:hover {
+    background: var(--green-50);
+}
+
+.leaderboard tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.leaderboard td:first-child {
+    color: var(--green-700);
+    font-weight: 700;
+}
+
+.target {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: var(--green-100);
+    color: var(--green-800);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+/* ================= DESTINATIONS ================= */
+
+#destinationList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.destination-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 12px;
+    border-radius: 11px;
+    background: #fafdfb;
+    border: 1px solid #edf3ef;
+    transition: 0.2s ease;
+}
+
+.destination-item:hover {
+    background: var(--green-50);
+    border-color: #d6ecdf;
+    transform: translateX(2px);
+}
+
+.destination-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.destination-flag {
+    width: 27px;
+    height: 20px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid #e2eae5;
+}
+
+.destination-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.destination-count {
+    min-width: 30px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--green-100);
+    color: var(--green-800);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+/* ================= CHARTS ================= */
+
+.chart-card {
+    height: 390px;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    height: calc(100% - 45px) !important;
+}
+
+/* ================= WALLET OVERLAY ================= */
+
+.wallet-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background: rgba(6, 37, 27, 0.62);
+    backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.wallet-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.wallet-modal {
+    width: min(1180px, 100%);
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #f8fbf9;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.65);
+    box-shadow: 0 25px 80px rgba(0, 30, 20, 0.28);
+    transform: translateY(15px) scale(0.985);
+    transition: transform 0.25s ease;
+    scrollbar-width: thin;
+    scrollbar-color: #b9dcca transparent;
+}
+
+.wallet-overlay.show .wallet-modal {
+    transform: translateY(0) scale(1);
+}
+
+.wallet-header {
+    padding: 22px 26px;
+    background: linear-gradient(135deg, var(--green-900), var(--green-700));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.wallet-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.wallet-heading-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: rgba(255,255,255,0.13);
+    font-size: 1.25rem;
+}
+
+.wallet-header h2 {
+    font-size: 1.35rem;
+}
+
+.wallet-header p {
+    margin-top: 2px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.82rem;
+}
+
+.wallet-close {
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    font-size: 1rem;
+    transition: 0.2s ease;
+}
+
+.wallet-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: rotate(4deg);
+}
+
+.wallet-date-banner {
+    margin: 20px 26px 4px;
+    padding: 15px 17px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(15,81,50,0.05);
+}
+
+.wallet-date-icon {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    background: var(--green-100);
+    color: var(--green-700);
+}
+
+.wallet-date-banner span,
+.section-kicker {
+    display: block;
+    color: var(--green-700);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.wallet-date-banner strong {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.92rem;
+}
+
+/* ================= WALLET SECTIONS ================= */
+
+.wallet-section {
+    padding: 22px 26px 0;
+}
+
+.wallet-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 14px;
+}
+
+.wallet-section-title h3 {
+    color: var(--green-900);
+    font-size: 1.05rem;
+    margin-top: 2px;
+}
+
+.wallet-section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    background: var(--green-100);
+    color: var(--green-800);
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.wallet-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.wallet-stat-card {
+    position: relative;
+    overflow: hidden;
+    padding: 17px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(15,81,50,0.045);
+}
+
+.wallet-stat-card::after {
+    content: "";
+    position: absolute;
+    right: -28px;
+    bottom: -35px;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: var(--green-50);
+}
+
+.wallet-stat-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--green-100);
+    color: var(--green-700);
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.wallet-stat-card span:not(.wallet-stat-icon) {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.wallet-stat-card strong {
+    display: block;
+    margin-top: 3px;
+    color: var(--green-900);
+    font-size: 1.3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.wallet-stat-card small {
+    color: #8a9992;
+    font-size: 0.7rem;
+    position: relative;
+    z-index: 1;
+}
+
+.wallet-stat-card.purple .wallet-stat-icon,
+.wallet-stat-card.pink .wallet-stat-icon,
+.wallet-stat-card.blue .wallet-stat-icon,
+.wallet-stat-card.green .wallet-stat-icon {
+    background: var(--green-100);
+    color: var(--green-700);
+}
+
+/* ================= HIGHLIGHTS ================= */
+
+.wallet-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.wallet-highlight {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 15px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.highlight-icon {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: var(--green-100);
+    color: var(--green-700);
+}
+
+.highlight-content {
+    min-width: 0;
+}
+
+.highlight-content span {
+    display: block;
+    color: var(--text-light);
+    font-size: 0.7rem;
+}
+
+.highlight-content strong {
+    display: block;
+    color: var(--green-900);
+    margin-top: 2px;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highlight-content small {
+    color: #899890;
+    font-size: 0.68rem;
+}
+
+/* ================= ANALYSIS ================= */
+
+.wallet-analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 22px 26px 0;
+}
+
+.wallet-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 17px;
+}
+
+.wallet-panel-title {
+    margin-bottom: 10px;
+}
+
+.wallet-panel-title > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.wallet-panel-title > div > span {
+    width: 35px;
+    height: 35px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background: var(--green-100);
+    color: var(--green-700);
+}
+
+.wallet-panel-title h3 {
+    font-size: 0.92rem;
+    color: var(--green-900);
+}
+
+.wallet-panel-title p {
+    font-size: 0.7rem;
+    color: var(--text-light);
+}
+
+.wallet-analysis-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 0;
+    border-bottom: 1px solid #edf2ef;
+}
+
+.wallet-analysis-row:last-child {
+    border-bottom: 0;
+}
+
+.wallet-analysis-name {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.wallet-analysis-name > span:last-child {
+    font-size: 0.78rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wallet-analysis-rank {
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: var(--green-50);
+    color: var(--green-700);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+
+.wallet-analysis-value {
+    text-align: right;
+}
+
+.wallet-analysis-value strong {
+    display: block;
+    color: var(--green-800);
+    font-size: 0.78rem;
+}
+
+.wallet-analysis-value small {
+    color: var(--text-light);
+    font-size: 0.66rem;
+}
+
+/* ================= DAILY BREAKDOWN ================= */
+
+.wallet-daily-breakdown {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+    gap: 8px;
+}
+
+.wallet-day-item {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 9px;
+    padding: 11px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.wallet-day-number {
+    grid-row: 1 / 3;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    background: var(--green-100);
+    color: var(--green-800);
+    font-weight: 800;
+    font-size: 0.75rem;
+}
+
+.wallet-day-revenue {
+    color: var(--green-900);
+    font-size: 0.76rem;
+}
+
+.wallet-day-orders {
+    color: var(--text-light);
+    font-size: 0.65rem;
+}
+
+.wallet-day-item.selected {
+    border-color: var(--green-500);
+    box-shadow: 0 0 0 2px rgba(32,169,104,0.1);
+    background: var(--green-50);
+}
+
+/* ================= WALLET FOOTER ================= */
+
+.wallet-footer {
+    margin: 22px 26px 26px;
+    padding-top: 17px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.wallet-footer > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-light);
+    font-size: 0.75rem;
+}
+
+.wallet-footer > div i {
+    color: var(--green-600);
+}
+
+#walletCloseBottom {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    background: var(--green-700);
+    color: white;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+#walletCloseBottom:hover {
+    background: var(--green-800);
+    transform: translateY(-1px);
+}
+
+/* ================= SCROLLBAR ================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #edf4ef;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #b7d8c5;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8fc1a5;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1100px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .kpi-card.primary {
+        grid-column: span 2;
+    }
+
+    .wallet-stat-grid,
+    .wallet-highlight-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 850px) {
+    .container {
+        width: min(100% - 24px, 720px);
+        padding-top: 18px;
+    }
+
+    .header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .top-menu {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .middle-section,
+    .chart-section,
+    .wallet-analysis-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-card {
+        height: 350px;
+    }
+
+    .wallet-overlay {
+        padding: 10px;
+    }
+
+    .wallet-modal {
+        max-height: 96vh;
+        border-radius: 16px;
+    }
+
+    .wallet-section,
+    .wallet-analysis-grid {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .wallet-date-banner {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    .wallet-footer {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-card.primary {
+        grid-column: auto;
+    }
+
+    .top-menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
+    .menu-card,
+    .menu-btn,
+    .download-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menu-card {
+        grid-column: span 2;
+    }
+
+    .leaderboard {
+        overflow-x: auto;
+    }
+
+    .leaderboard table {
+        min-width: 650px;
+    }
+
+    .wallet-stat-grid,
+    .wallet-highlight-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-header {
+        padding: 17px;
+    }
+
+    .wallet-heading-icon {
+        width: 42px;
+        height: 42px;
+    }
+
+    .wallet-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .wallet-daily-breakdown {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .wallet-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
